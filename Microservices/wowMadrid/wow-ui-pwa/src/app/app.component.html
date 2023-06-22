@@ -1,0 +1,78 @@
+<mat-toolbar color="accent" class="header">
+  <img src="assets/img/logo-no-background.png" alt="Logo de la aplicación" class="logo">
+  <span>PWA Wow Madrid</span>
+</mat-toolbar>
+
+<div style="border: 2px #FCCCF9 solid; margin-top: 2px;">
+  <h3 style="margin-top: 10px; margin-left: 10px; font-size: 18px;"><b>Ver por distrito</b></h3>
+  <select class="drop-down" [(ngModel)]="selectedDistrict" (change)="loadEvents()">
+    <option disabled selected value="undefined">Distritos</option>
+    <option *ngFor="let district of districts" [value]="district.district_name">
+      {{ district.district_name }}
+    </option>
+  </select>
+</div>
+
+<div class="table-container">
+  <table mat-table [dataSource]="dataSource" matSort>
+
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> TITLE </th>
+      <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> DESCRIPTION </th>
+      <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="type">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> TYPE </th>
+      <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="free">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> FREE </th>
+      <td mat-cell *matCellDef="let element"> {{element.free}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="price">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> PRICE </th>
+      <td mat-cell *matCellDef="let element"> {{element.price}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="date_start">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> DATE START </th>
+      <td mat-cell *matCellDef="let element"> {{element.date_start}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="date_end">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> DATE END </th>
+      <td mat-cell *matCellDef="let element"> {{element.date_end}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="time">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> TIME </th>
+      <td mat-cell *matCellDef="let element"> {{element.time}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="location_name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> LOCATION NAME</th>
+      <td mat-cell *matCellDef="let element"> {{element.location_name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="district_name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> DISTRICT</th>
+      <td mat-cell *matCellDef="let element"> {{element.district_name}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="col"></tr>
+
+    <tr mat-row *matRowDef="let row; columns: col;"></tr>
+
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[10, 20, 30]" showFirstLastButtons></mat-paginator>
+</div>
+
+<router-outlet></router-outlet>

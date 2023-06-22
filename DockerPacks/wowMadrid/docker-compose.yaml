@@ -1,0 +1,84 @@
+version: '3.9'
+services:
+
+  wow-postgres:
+    image: postgres:14.2-alpine
+    restart: always
+    environment:
+      POSTGRES_DB: wow
+      POSTGRES_USER: "${POSTGRES_USER:-postgres}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD:-postgres}"
+    ports:
+    - 5433:5432
+    volumes:
+    - ./bd-ddl/wow-ddl.sql:/docker-entrypoint-initdb.d/wow-ddl.sql                                            
+    - ./postgres-data:/var/lib/postgresql/data
+    
+  zookeeper:
+    image: wurstmeister/zookeeper
+    restart: always
+    ports:
+      - "2181:2181"
+      
+  kafka:
+    image: wurstmeister/kafka
+    restart: always
+    depends_on: 
+     - zookeeper
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: kafka
+      KAFKA_CREATE_TOPICS: "culturalEvents:1:1"
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+    volumes:
+      - ./docker.sock:/var/run/docker.sock
+      
+  wow-injector:
+    restart: always
+    build:
+      context: ../../Microservices/wowMadrid/wow-injector
+      dockerfile: Dockerfile
+    depends_on:
+      - kafka
+
+  wow-consumer-to-database:
+    restart: always
+    build:
+      context: ../../Microservices/wowMadrid/wow-kafka-database-service
+      dockerfile: Dockerfile
+    depends_on:
+      - kafka
+      - wow-postgres
+  
+  wow-dao:
+    restart: always
+    build:
+      context: ../../Microservices/wowMadrid/wow-dao
+      dockerfile: Dockerfile
+    depends_on:
+      - wow-postgres
+    
+  wow-bll:
+    restart: always
+    build:
+      context: ../../Microservices/wowMadrid/wow-bll
+      dockerfile: Dockerfile
+    depends_on:
+      - wow-dao
+    ports:
+      - "5000:5000"
+  
+  wow-pwa:
+    restart: always
+    build:
+      context: ../../Microservices/wowMadrid/wow-ui-pwa
+      dockerfile: Dockerfile
+    depends_on:
+      - wow-bll
+    ports:
+      - "8080:80"
+      
+networks:
+  wowmadrid_default:
+    external: true

@@ -1,0 +1,30 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.table-container {
+    width: 100%; /* Ajusta el ancho según tus necesidades */
+    height: 100%; /* Ajusta la altura según tus necesidades */
+    margin-top: 20px; /* Ajusta los márgenes según tus necesidades */
+    padding: 20px; /* Ajusta el relleno según tus necesidades */
+    border: 1px solid #ccc; /* Ajusta el borde según tus necesidades */
+    border-radius: 4px; /* Ajusta el radio de borde según tus necesidades */
+    background-color: #fff; /* Ajusta el color de fondo según tus necesidades */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Ajusta la sombra según tus necesidades */
+  }
+
+  .logo {
+    width: 100px; 
+    height: 62px; 
+  }
+
+  .drop-down{
+    margin-left: 15px;
+    margin-bottom: 5px;
+    width: auto;
+    height: auto;
+    font-size: 16px;
+  }
+

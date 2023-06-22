@@ -1,0 +1,9 @@
+package com.emelyAguilar.wowconsumertodatabaseservice;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+
+public interface IEventDAO extends JpaRepository<Event, String>{
+	
+}
