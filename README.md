@@ -12,7 +12,7 @@ This experience try to provide a framework in which students can develop project
 ### Docker Packs
 | Name  | Development Team | Description | Business Case |
 |---|---|---|---|
-| [wowMadrid](DockerPacks/wowMadrid) | Emely Aguilar (<emelygape@gmail.com>) | Dockers...(modificar) | [wowMadrid](BusinessCases/wowMadrid) |
+| [wowMadrid](DockerPacks/wowMadrid) | Emely Aguilar (<emelygape@gmail.com>) | Docker Compose | [wowMadrid](BusinessCases/wowMadrid) |
 
 
 ### Microservices
